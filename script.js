@@ -1,20 +1,3 @@
-// $('#form').submit(function(e){
-
-//   e.preventDefault();
-
-//   var input = $('#input').val()
-//   var url = 'https://genius.p.rapidapi.com/search?q=' + input + '&rapidapi-key=c56275269fmshd3bc2584975a2eep1e6fd3jsnca648f8db286'
-//   console.log(url);
-
-//   $.get(url, function(data){
-//     console.log(data);
-//   });
-
-// });
-
-
-
-
 // Fetch API data
 var settings = {
 	"async": true,
@@ -31,18 +14,36 @@ var settings = {
   })
 
 
-// Include input on clicking submit to link
+// Include input on clicking submit to the link
+
 $('#form').submit(function(e){
   e.preventDefault();
 
-  var input = $('#search').val()
-  var result =  'https://genius.p.rapidapi.com/search?q=' + input + '&rapidapi-key=c56275269fmshd3bc2584975a2eep1e6fd3jsnca648f8db286'
-  console.log(result);
+  var userInput = $('#search').val()
+// Replaced the spacing with %20
+  var replaceUserInput = userInput.replace(/ /g, '%20');
 
-  $.get(result, function(data){
+  let result = ''
+
+  var finalResult =  'https://genius.p.rapidapi.com/search?q=' + replaceUserInput + '&rapidapi-key=c56275269fmshd3bc2584975a2eep1e6fd3jsnca648f8db286'
+  console.log(finalResult);
+
+  $.get(finalResult, function(data){
     console.log(data);
-  });
+    $('#formResults').html('')
 
+    data.response.hits.forEach(res => {
+      result = `
+        <img src=${res.result.song_art_image_thumbnail_url}></img>
+        <p>${res.result.full_title}</p>
+      `
+      console.log(result);
+      $('#formResults').append(result);
+ 
+
+    });
+
+  });
 });
 
 
@@ -51,39 +52,3 @@ $('#form').submit(function(e){
 
 
 
-
-
-// Let getSearch = "";
-// var search = $('#search').val()
-
-// var settings = {
-// 	"async": true,
-// 	"crossDomain": true,
-// 	"url": "https://genius.p.rapidapi.com/search?q=" + getSearch,
-// 	"method": "GET",
-// 	"headers": {
-// 		"x-rapidapi-host": "genius.p.rapidapi.com",
-//     "x-rapidapi-key": "c56275269fmshd3bc2584975a2eep1e6fd3jsnca648f8db286"
-//     }}
-
-//   $.getJSON (settings, function(data){
-//     console.log(data);
-//   }
-    
-
-
-
-
-// $('#form').submit(function(e){
-
-//   e.preventDefault();
-
-//   var input = $('#input').val()
-//   var url = 'https://genius.p.rapidapi.com/search?q=' + input + '&rapidapi-key=c56275269fmshd3bc2584975a2eep1e6fd3jsnca648f8db286'
-//   console.log(url);
-
-//   $.get(url, function(data){
-//     console.log(data);
-//   });
-
-// });
